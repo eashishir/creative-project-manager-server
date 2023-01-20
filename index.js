@@ -21,6 +21,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function  run(){
    try{
     const usersCollection = client.db('creativeProjectManager').collection('users');
+
      app.get('/users' , async(req, res) => {
         const query = {};
         const users = await usersCollection.find(query).toArray();
@@ -35,10 +36,10 @@ run().catch(console.log)
 
 
 app.get('/' , async(req, res) => {
-    res.send('creative product manager is running');
+    res.send('Creative product manager is running');
 })
 
-app.listen(port, () => console.log(`creative project manager running on ${port}`))
+app.listen(port, () => console.log(`Creative project manager running on ${port}`))
 
 
 
