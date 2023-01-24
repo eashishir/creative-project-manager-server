@@ -20,13 +20,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function  run(){
    try{
-    const usersCollection = client.db('creativeProjectManager').collection('users');
+      const taskCollections = client.db('creative-manager').collection('tasks')
 
-     app.get('/users' , async(req, res) => {
-        const query = {};
-        const users = await usersCollection.find(query).toArray();
-        res.send(users)
-     })
+
+      app.post('/task', async (req, res) => {
+         const task = req.body;
+         const result = await taskCollections.insertOne(task);
+         res.send(result);
+
+      })
    }
    finally{
 
