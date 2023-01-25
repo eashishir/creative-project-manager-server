@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');;
 require ('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -13,13 +13,14 @@ app.use(express.json());
 
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.4qgafns.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_PASS}@cluster0.gb5uzf7.mongodb.net/?retryWrites=true&w=majority`;
 console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
 async function  run(){
    try{
+      console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks')
 
 
@@ -28,6 +29,14 @@ async function  run(){
          const result = await taskCollections.insertOne(task);
          res.send(result);
 
+      });
+
+      app.get('/task',async(req,res)=>{
+         const query= {};
+         const cursor = taskCollections.find(query)
+         const tasks = await cursor.toArray();
+         console.log(tasks);
+         res.send(tasks)
       })
    }
    finally{
