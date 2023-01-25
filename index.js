@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');;
-require ('dotenv').config()
+require('dotenv').config()
 const port = process.env.PORT || 5000;
 
 
@@ -18,10 +18,11 @@ console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
-async function  run(){
-   try{
+async function run() {
+   try {
       console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks')
+      const usersCollections = client.db('creative-manager').collection('users')
 
 
       app.post('/task', async (req, res) => {
@@ -31,23 +32,31 @@ async function  run(){
 
       });
 
-      app.get('/task',async(req,res)=>{
-         const query= {};
+      app.get('/task', async (req, res) => {
+         const query = {};
          const cursor = taskCollections.find(query)
          const tasks = await cursor.toArray();
          console.log(tasks);
          res.send(tasks)
+      });
+
+      //User information -----------
+      app.post('/users', async (req, res) => {
+         const user = req.body;
+         const result = await usersCollections.insertOne(user)
+         res.send(result);
+
       })
    }
-   finally{
+   finally {
 
    }
 }
 run().catch(console.log)
 
 
-app.get('/' , async(req, res) => {
-    res.send('Creative product manager is running');
+app.get('/', async (req, res) => {
+   res.send('Creative product manager is running');
 })
 
 app.listen(port, () => console.log(`Creative project manager running on ${port}`))
