@@ -23,6 +23,7 @@ async function run() {
       console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks')
       const usersCollections = client.db('creative-manager').collection('users')
+      const goalsCollections = client.db('creative-manager').collection('goals')
 
 
       app.post('/task', async (req, res) => {
@@ -46,6 +47,19 @@ async function run() {
          const result = await usersCollections.insertOne(user)
          res.send(result);
 
+      })
+      //Goal modal data post-------
+      app.post('/goals', async (req, res) => {
+         goals = req.body
+         const result = await goalsCollections.insertOne(goals)
+         res.send(result)
+      })
+      ////Goal modal data get-------robin
+      app.get('/goals', async (req, res) => {
+         const email = req.query.email
+         const query = { email: email }
+         const goals = await goalsCollections.find(query).toArray();
+         res.send(goals);
       })
    }
    finally {
