@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');;
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require ('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -21,10 +21,11 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function  run(){
    try{
       console.log('db connected');
-      const taskCollections = client.db('creative-manager').collection('tasks')
-
-
-      app.post('/task', async (req, res) => {
+      const taskCollections = client.db('creative-manager').collection('tasks');
+      const projectCollections = client.db('creative-manager').collection('Projects')
+      const usersCollections = client.db('creative-manager').collection('users')
+      
+    app.post('/task', async (req, res) => {
          const task = req.body;
          const result = await taskCollections.insertOne(task);
          res.send(result);
@@ -37,7 +38,58 @@ async function  run(){
          const tasks = await cursor.toArray();
          console.log(tasks);
          res.send(tasks)
-      })
+      });
+
+       //User information -----------
+  app.post('/users', async (req, res) => {
+   const user = req.body;
+   const result = await usersCollections.insertOne(user)
+   res.send(result);
+
+})
+   
+
+//create project---Rokeya
+
+//post project
+  app.post('/project',async (req,res)=>{
+         const project= req.body;
+         const result = await projectCollections.insertOne(project);
+         res.send(result);
+      });
+
+//get all project
+app.get('/project',async(req,res)=>{
+   const query = {};
+   const cursor = projectCollections.find(query)
+   const projects = await cursor.toArray();
+   res.send(projects);
+});
+
+//project by get id
+app.get('/project/:id', async (req, res) => {
+   const id = req.params.id;
+   const query = { _id: ObjectId(id) };
+   const  result = await projectCollections.findOne(query);
+   res.send(result);
+});
+
+
+//get project by user
+app.get('/project',async(req,res)=>{
+
+ let query = {};
+ if(req.query.email){
+   query={
+      email:req.query.email
+   }
+ }
+ const cursor = projectCollections.find(query);
+   const project = await cursor.toArray();
+res.send(project);
+
+})
+
    }
    finally{
 
