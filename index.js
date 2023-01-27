@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');;
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');;
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -41,6 +41,8 @@ async function run() {
          res.send(tasks)
       });
 
+      // robin part-----
+
       //User information -----------
       app.post('/users', async (req, res) => {
          const user = req.body;
@@ -55,12 +57,29 @@ async function run() {
          res.send(result)
       })
       ////Goal modal data get-------robin
+      // app.get('/goals', async (req, res) => {
+      //    const email = req.query.email
+      //    const query = { email: email }
+      //    const goals = await goalsCollections.find(query).toArray();
+      //    res.send(goals);
+      // })
+
+
+      ////Goal modal data get-------robin
       app.get('/goals', async (req, res) => {
-         const email = req.query.email
-         const query = { email: email }
+         // const email = req.query.email
+         const query = {}
          const goals = await goalsCollections.find(query).toArray();
          res.send(goals);
       })
+
+      app.get('/goals/:id', async (req, res) => {
+         const id = req.params.id;
+         const query = { _id: ObjectId(id) };
+         const goal = await goalsCollections.findOne(query);
+         res.send(goal)
+      })
+      // robin part end-----
    }
    finally {
 
