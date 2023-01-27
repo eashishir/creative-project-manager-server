@@ -41,13 +41,9 @@ async function run() {
          res.send(tasks)
       });
 
-<<<<<<< HEAD
-      //User information -----------robin
-=======
       // robin part-----
 
       //User information -----------
->>>>>>> 97bf07e1c8e311548de575a745f6584f6de04ddd
       app.post('/users', async (req, res) => {
          const user = req.body;
          const result = await usersCollections.insertOne(user)
