@@ -23,6 +23,7 @@ async function  run(){
       console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks');
       const projectCollections = client.db('creative-manager').collection('Projects')
+      const editedProjectCollections = client.db('creative-manager').collection('edited-project')
       const usersCollections = client.db('creative-manager').collection('users')
       
     app.post('/task', async (req, res) => {
@@ -88,7 +89,17 @@ app.get('/project',async(req,res)=>{
    const project = await cursor.toArray();
 res.send(project);
 
-})
+});
+
+
+//edited project
+
+app.post('/project-edited',async (req,res)=>{
+   const project= req.body;
+   const result = await editedProjectCollections.insertOne(project);
+   res.send(result);
+});
+
 
    }
    finally{
