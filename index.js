@@ -46,7 +46,7 @@ async function  run(){
 
 //create project manager---Rokeya
 
-//post project
+//post project name
   app.post('/project',async (req,res)=>{
          const project= req.body;
          const result = await projectCollections.insertOne(project);
