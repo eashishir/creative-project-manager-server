@@ -61,38 +61,38 @@ app.get('/project',async(req,res)=>{
    res.send(projects);
 });
 
-//project by get id
-app.get('/project/:id', async (req, res) => {
-   const id = req.params.id;
-   const query = { _id: ObjectId(id) };
-   const  result = await projectCollections.findOne(query);
-   res.send(result);
-});
+// //project by get id
+// app.get('/project/:id', async (req, res) => {
+//    const id = req.params.id;
+//    const query = { _id: ObjectId(id) };
+//    const  result = await projectCollections.findOne(query);
+//    res.send(result);
+// });
 
 
-//get project by user
-app.get('/project',async(req,res)=>{
+// //get project by user
+// app.get('/project',async(req,res)=>{
 
- let query = {};
- if(req.query.email){
-   query={
-      email:req.query.email
-   }
- }
- const cursor = projectCollections.find(query);
-   const project = await cursor.toArray();
-res.send(project);
+//  let query = {};
+//  if(req.query.email){
+//    query={
+//       email:req.query.email
+//    }
+//  }
+//  const cursor = projectCollections.find(query);
+//    const project = await cursor.toArray();
+// res.send(project);
 
-});
+// });
 
 
-//edited project
+// //edited project
 
-app.post('/project-edited',async (req,res)=>{
-   const project= req.body;
-   const result = await editedProjectCollections.insertOne(project);
-   res.send(result);
-});
+// app.post('/project-edited',async (req,res)=>{
+//    const project= req.body;
+//    const result = await editedProjectCollections.insertOne(project);
+//    res.send(result);
+// });
 
 
    }
