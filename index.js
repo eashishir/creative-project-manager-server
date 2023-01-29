@@ -51,7 +51,7 @@ async function run() {
 })
    
 
-//create project---Rokeya
+//create project manager---Rokeya
 
 //post project
   app.post('/project',async (req,res)=>{
