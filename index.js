@@ -21,7 +21,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
    try {
       console.log('db connected');
-      const taskCollections = client.db('creative-manager').collection('tasks')
+      const taskCollections = client.db('creative-manager').collection('tasks');
+      const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
 
@@ -41,29 +42,23 @@ async function run() {
          res.send(tasks)
       });
 
-      // robin part-----
+       //User information -----------
+  app.post('/users', async (req, res) => {
+   const user = req.body;
+   const result = await usersCollections.insertOne(user)
+   res.send(result);
 
-      //User information -----------
-      app.post('/users', async (req, res) => {
-         const user = req.body;
-         const result = await usersCollections.insertOne(user)
+})
+   
+
+//create project---Rokeya
+
+//post project
+  app.post('/project',async (req,res)=>{
+         const project= req.body;
+         const result = await projectCollections.insertOne(project);
          res.send(result);
-
-      })
-      //Goal modal data post-------
-      app.post('/goals', async (req, res) => {
-         goals = req.body
-         const result = await goalsCollections.insertOne(goals)
-         res.send(result)
-      })
-      ////Goal modal data get-------robin
-      // app.get('/goals', async (req, res) => {
-      //    const email = req.query.email
-      //    const query = { email: email }
-      //    const goals = await goalsCollections.find(query).toArray();
-      //    res.send(goals);
-      // })
-
+      });
 
       ////Goal modal data get-------robin
       app.get('/goals', async (req, res) => {
