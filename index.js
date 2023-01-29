@@ -24,7 +24,7 @@ async function  run(){
       const taskCollections = client.db('creative-manager').collection('tasks');
       const projectCollections = client.db('creative-manager').collection('Projects')
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
-      const usersCollections = client.db('creative-manager').collection('users')
+
       
     app.post('/task', async (req, res) => {
          const task = req.body;
@@ -41,13 +41,7 @@ async function  run(){
          res.send(tasks)
       });
 
-       //User information -----------
-  app.post('/users', async (req, res) => {
-   const user = req.body;
-   const result = await usersCollections.insertOne(user)
-   res.send(result);
 
-})
    
 
 //create project---Rokeya
