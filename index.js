@@ -21,10 +21,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
    try {
       console.log('db connected');
-      const taskCollections = client.db('creative-manager').collection('tasks')
+      const taskCollections = client.db('creative-manager').collection('tasks');
+      const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
-
 
       app.post('/task', async (req, res) => {
          const task = req.body;
@@ -41,8 +41,6 @@ async function run() {
          res.send(tasks)
       });
 
-      // robin part-----
-
       //User information -----------
       app.post('/users', async (req, res) => {
          const user = req.body;
@@ -50,6 +48,17 @@ async function run() {
          res.send(result);
 
       })
+
+      app.get('/users', async (req, res) => {
+         const email = req.query.email
+         const query = { email: email }
+         const users = await usersCollections.findOne(query);
+         res.send(users);
+      })
+
+
+
+
       //Goal modal data post-------robin
       app.post('/goals', async (req, res) => {
          goals = req.body
@@ -65,6 +74,15 @@ async function run() {
       // })
 
 
+      //create project---Rokeya
+
+      //post project
+      app.post('/project', async (req, res) => {
+         const project = req.body;
+         const result = await projectCollections.insertOne(project);
+         res.send(result);
+      });
+
       ////Goal modal data get-------robin
       app.get('/goals', async (req, res) => {
          // const email = req.query.email
@@ -73,17 +91,35 @@ async function run() {
          res.send(goals);
       })
 
-      app.get('/goals/:id', async (req, res) => {
+      //project by get id
+      app.get('/project/:id', async (req, res) => {
          const id = req.params.id;
          const query = { _id: ObjectId(id) };
-         const goal = await goalsCollections.findOne(query);
-         res.send(goal)
+         const result = await projectCollections.findOne(query);
+         res.send(result);
+      });
+
+
+      //get project by user
+      app.get('/project', async (req, res) => {
+
+         let query = {};
+         if (req.query.email) {
+            query = {
+               email: req.query.email
+            }
+         }
+         const cursor = projectCollections.find(query);
+         const project = await cursor.toArray();
+         res.send(project);
+
+
       })
-      // robin part end-----
    }
    finally {
 
    }
+
 }
 run().catch(console.log)
 
