@@ -25,6 +25,7 @@ async function run() {
       const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
+      const editedProjectCollections = client.db('creative-manager').collection('edited-project')
 
       app.post('/task', async (req, res) => {
          const task = req.body;
@@ -91,18 +92,11 @@ async function run() {
          res.send(goals);
       })
 
-      //project by get id
-      app.get('/project/:id', async (req, res) => {
-         const id = req.params.id;
-         const query = { _id: ObjectId(id) };
-         const result = await projectCollections.findOne(query);
-         res.send(result);
-      });
+   
 
 
       //get project by user
       app.get('/project', async (req, res) => {
-
          let query = {};
          if (req.query.email) {
             query = {
@@ -112,9 +106,30 @@ async function run() {
          const cursor = projectCollections.find(query);
          const project = await cursor.toArray();
          res.send(project);
+      });
 
+   //edited project
 
-      })
+app.post('/project-edited',async (req,res)=>{
+   const project= req.body;
+   const result = await editedProjectCollections.insertOne(project);
+   res.send(result);
+});
+
+//get edited projects by user
+app.get('/project-edited',async(req,res)=>{
+   console.log(req.query);
+   let query = {};
+   if(req.query.email){
+      query={
+         email:req.query.email
+      }
+   }
+   const cursor = editedProjectCollections.find(query);
+   const editedProject = await cursor.toArray();
+   res.send(editedProject);
+});
+
    }
    finally {
 
