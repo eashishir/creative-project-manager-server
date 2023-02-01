@@ -24,6 +24,13 @@ async function run() {
       const taskCollections = client.db('creative-manager').collection('tasks');
       const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
+<<<<<<< HEAD
+=======
+      const goalsCollections = client.db('creative-manager').collection('goals')
+      // Mofassel-----------
+      const UploadImage = client.db('UploadImage').collection('images')
+// --------------
+>>>>>>> 18c753c595c3371ef34e972249fae72b635c9d14
 
       app.post('/task', async (req, res) => {
          const task = req.body;
@@ -38,15 +45,16 @@ async function run() {
          const tasks = await cursor.toArray();
          console.log(tasks);
          res.send(tasks)
-      });
+      })
 
-      //User information -----------
+      //User information -----------robin
       app.post('/users', async (req, res) => {
          const user = req.body;
          const result = await usersCollections.insertOne(user)
          res.send(result);
 
       })
+<<<<<<< HEAD
 
 
       //create project---Rokeya
@@ -58,6 +66,36 @@ async function run() {
          res.send(result);
       });
 
+=======
+      // all user get ----------Mofassel
+      app.get ("/allusers",async(req,res)=>{
+         const query = {}
+         const cursor =  await usersCollections.find(query).toArray()
+        res.send(cursor)
+      })
+      // user delete  ----Mofassel
+      app.delete("/allusers/:id",async(req,res)=>{
+
+         const id = req.params.id;
+         const query = {_id:ObjectId(id)}
+         // const result = await usersCollections.deleteOne(query)
+         // res.send(result)
+         console.log(id,query);
+     })
+      // Admin roll ----Mofasse
+          app.get('/adminRole/:email',async(req,res)=>{
+            const email = req.params.email
+            const query ={email}
+            const user = await usersCollections.findOne(query)
+            res.send({isAdminRole:user.role ==='admin'}) 
+        })
+      //Goal modal data post-------robin
+      app.post('/goals', async (req, res) => {
+         goals = req.body
+         const result = await goalsCollections.insertOne(goals)
+         res.send(result)
+      })
+>>>>>>> 18c753c595c3371ef34e972249fae72b635c9d14
       ////Goal modal data get-------robin
       app.get('/goals', async (req, res) => {
          // const email = req.query.email
@@ -65,6 +103,7 @@ async function run() {
          const goals = await goalsCollections.find(query).toArray();
          res.send(goals);
       })
+<<<<<<< HEAD
 
       //project by get id
       app.get('/project/:id', async (req, res) => {
@@ -90,6 +129,17 @@ async function run() {
 
 
       })
+=======
+      // image ling ----Mofassel
+      app.post('/upImg', async (req, res) => {
+         const UpImage = req.body
+         console.log(UpImage);
+         const result = await UploadImage.insertOne(UpImage)
+         res.send(result)
+         console.log(result);
+      })
+      
+>>>>>>> 18c753c595c3371ef34e972249fae72b635c9d14
    }
    finally {
 
@@ -98,10 +148,16 @@ async function run() {
    }
   run().catch(console.log)
 
+<<<<<<< HEAD
 
    app.get('/', async (req, res) => {
       res.send('Creative product manager is running');
    })
+=======
+app.get('/', async (req, res) => {
+   res.send('Creative product manager is running');
+})
+>>>>>>> 18c753c595c3371ef34e972249fae72b635c9d14
 
    app.listen(port, () => console.log(`Creative project manager running on ${port}`))
 
