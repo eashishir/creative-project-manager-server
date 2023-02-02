@@ -50,12 +50,7 @@ async function run() {
 
       })
 
-      app.get('/users', async (req, res) => {
-         const email = req.query.email
-         const query = { email: email }
-         const users = await usersCollections.findOne(query);
-         res.send(users);
-      })
+  
 
 
 
@@ -66,14 +61,7 @@ async function run() {
          const result = await goalsCollections.insertOne(goals)
          res.send(result)
       })
-      ////Goal modal data get-------robin
-      // app.get('/goals', async (req, res) => {
-      //    const email = req.query.email
-      //    const query = { email: email }
-      //    const goals = await goalsCollections.find(query).toArray();
-      //    res.send(goals);
-      // })
-
+  
 
       //create project---Rokeya
 
