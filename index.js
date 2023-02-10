@@ -23,6 +23,7 @@ async function run() {
       console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks')
       const usersCollections = client.db('creative-manager').collection('users')
+      const projectPlanning = client.db('creative-manager').collection('project-planning')
       const goalsCollections = client.db('creative-manager').collection('goals')
       // Mofassel-----------
       const UploadImage = client.db('UploadImage').collection('images')
@@ -54,6 +55,12 @@ async function run() {
       app.get ("/allusers",async(req,res)=>{
          const query = {}
          const cursor =  await usersCollections.find(query).toArray()
+        res.send(cursor)
+      })
+      // project-planning ----------Mofassel
+      app.get ("/project-planning",async(req,res)=>{
+         const query = {}
+         const cursor =  await projectPlanning.find(query).toArray()
         res.send(cursor)
       })
       // user delete  ----Mofassel
