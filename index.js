@@ -73,7 +73,7 @@ async function run() {
          res.send(goals);
       })
 
-      app.get('/goals/:id', async (req, res) => {
+      app.get('/myGoals/:id', async (req, res) => {
          const id = req.params.id;
          const query = { _id: ObjectId(id) };
          const goal = await goalsCollections.findOne(query);
