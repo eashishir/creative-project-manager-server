@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');;
-require('dotenv').config()
-const port = process.env.PORT || 5000;
+const { MongoClient, ServerApiVersion, ObjectId, CURSOR_FLAGS } = require('mongodb');
+require('dotenv').config();
 
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -26,12 +26,24 @@ async function run() {
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
+      const blogCollections = client.db('creative-manager').collection('blog-article')
+      
 
+      
+      
       app.post('/task', async (req, res) => {
          const task = req.body;
          const result = await taskCollections.insertOne(task);
          res.send(result);
 
+      });
+
+      //todo
+      app.post('/todoTask', async (req, res) => {
+         const todo = req.body;
+         console.log(todo);
+         const result = await todoCollection.insertOne(todo);
+         res.send(result);
       });
 
       app.get('/task', async (req, res) => {
@@ -51,10 +63,6 @@ async function run() {
       })
 
   
-
-
-
-
       //Goal modal data post-------robin
       app.post('/goals', async (req, res) => {
          goals = req.body
@@ -106,7 +114,7 @@ app.post('/project-edited',async (req,res)=>{
 
 //get edited projects by user
 app.get('/project-edited',async(req,res)=>{
-   console.log(req.query);
+   // console.log(req.query);
    let query = {};
    if(req.query.email){
       query={
@@ -117,6 +125,16 @@ app.get('/project-edited',async(req,res)=>{
    const editedProject = await cursor.toArray();
    res.send(editedProject);
 });
+  
+
+//get blog article
+app.get('/blog-article', async (req, res) => {
+   const query = {}
+   const article = await blogCollections.find(query).toArray();
+   res.send(article);
+});
+
+
 
    }
    finally {
