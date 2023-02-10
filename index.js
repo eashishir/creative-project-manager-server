@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');;
+const { MongoClient, ServerApiVersion, ObjectId, ObjectID } = require('mongodb');;
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -77,11 +77,25 @@ async function run() {
          res.send({ isAdminRole: user.role === 'admin' })
       })
       //Goal modal data post-------robin
+
+
+
+
       app.post('/goals', async (req, res) => {
          goals = req.body
          const result = await goalsCollections.insertOne(goals)
          res.send(result)
       })
+
+      // Tauhidul Islam Robin
+      app.get('/myGoals/:id', async (req, res) => {
+         const id = req.params.id;
+         const query = { _id: ObjectId(id) };
+         const goal = await goalsCollections.findOne(query);
+         res.send(goal)
+      })
+
+
       ////Goal modal data get-------robin
       app.get('/goals', async (req, res) => {
          // const email = req.query.email
