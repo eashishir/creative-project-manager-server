@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion, ObjectId, ObjectID } = require('mongodb');;
-require('dotenv').config()
-const port = process.env.PORT || 5000;
+const { MongoClient, ServerApiVersion, ObjectId, CURSOR_FLAGS } = require('mongodb');
+require('dotenv').config();
 
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -26,9 +26,10 @@ async function run() {
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
-      // Mofassel-----------
-      const UploadImage = client.db('UploadImage').collection('images')
-      // --------------
+      const blogCollections = client.db('creative-manager').collection('blog-article')
+
+
+
 
       app.post('/task', async (req, res) => {
          const task = req.body;
@@ -37,7 +38,13 @@ async function run() {
 
       });
 
-
+      //todo
+      app.post('/todoTask', async (req, res) => {
+         const todo = req.body;
+         console.log(todo);
+         const result = await todoCollection.insertOne(todo);
+         res.send(result);
+      });
 
       app.get('/task', async (req, res) => {
          const query = {};
@@ -47,35 +54,15 @@ async function run() {
          res.send(tasks)
       })
 
-      //User information -----------robin
+      //User information -----------
       app.post('/users', async (req, res) => {
          const user = req.body;
          const result = await usersCollections.insertOne(user)
          res.send(result);
 
       })
-      // all user get ----------Mofassel
-      app.get("/allusers", async (req, res) => {
-         const query = {}
-         const cursor = await usersCollections.find(query).toArray()
-         res.send(cursor)
-      })
-      // user delete  ----Mofassel
-      app.delete("/allusers/:id", async (req, res) => {
 
-         const id = req.params.id;
-         const query = { _id: ObjectId(id) }
-         // const result = await usersCollections.deleteOne(query)
-         // res.send(result)
-         console.log(id, query);
-      })
-      // Admin roll ----Mofasse
-      app.get('/adminRole/:email', async (req, res) => {
-         const email = req.params.email
-         const query = { email }
-         const user = await usersCollections.findOne(query)
-         res.send({ isAdminRole: user.role === 'admin' })
-      })
+
       //Goal modal data post-------robin
 
 
@@ -87,30 +74,6 @@ async function run() {
          res.send(result)
       })
 
-      // Tauhidul Islam Robin
-      app.get('/myGoals/:id', async (req, res) => {
-         const id = req.params.id;
-         const query = { _id: ObjectId(id) };
-         const goal = await goalsCollections.findOne(query);
-         res.send(goal)
-      })
-
-
-      ////Goal modal data get-------robin
-      app.get('/goals', async (req, res) => {
-         // const email = req.query.email
-         const query = {}
-         const goals = await goalsCollections.find(query).toArray();
-         res.send(goals);
-      })
-      // image ling ----Mofassel
-      app.post('/upImg', async (req, res) => {
-         const UpImage = req.body
-         console.log(UpImage);
-         const result = await UploadImage.insertOne(UpImage)
-         res.send(result)
-         console.log(result);
-      })
 
       //create project---Rokeya
 
@@ -120,6 +83,16 @@ async function run() {
          const result = await projectCollections.insertOne(project);
          res.send(result);
       });
+
+      ////Goal modal data get-------robin
+      app.get('/goals', async (req, res) => {
+         // const email = req.query.email
+         const query = {}
+         const goals = await goalsCollections.find(query).toArray();
+         res.send(goals);
+      })
+
+
 
 
       //get project by user
@@ -145,7 +118,7 @@ async function run() {
 
       //get edited projects by user
       app.get('/project-edited', async (req, res) => {
-         console.log(req.query);
+         // console.log(req.query);
          let query = {};
          if (req.query.email) {
             query = {
@@ -158,9 +131,12 @@ async function run() {
       });
 
 
-
-
-
+      //get blog article
+      app.get('/blog-article', async (req, res) => {
+         const query = {}
+         const article = await blogCollections.find(query).toArray();
+         res.send(article);
+      });
 
 
 
@@ -170,6 +146,9 @@ async function run() {
    }
 
 }
+run().catch(console.log)
+
+
 run().catch(console.log)
 
 app.get('/', async (req, res) => {
