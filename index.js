@@ -62,8 +62,34 @@ async function run() {
          res.send(result);
 
       })
+      // all user get ----------Mofassel
+      app.get ("/allusers",async(req,res)=>{
+         const query = {}
+         const cursor =  await usersCollections.find(query).toArray()
+        res.send(cursor)
+      })
+      // project-planning ----------Mofassel Hosain
+      app.get ("/project-planning",async(req,res)=>{
+         const query = {}
+         const cursor =  await projectPlanning.find(query).toArray()
+        res.send(cursor)
+      })
+      // user delete  ----Mofassel
+      app.delete("/allusers/:id",async(req,res)=>{
 
-
+         const id = req.params.id;
+         const query = {_id:ObjectId(id)}
+         // const result = await usersCollections.deleteOne(query)
+         // res.send(result)
+         // console.log(id,query);
+     })
+      // Admin roll ----Mofasse
+          app.get('/adminRole/:email',async(req,res)=>{
+            const email = req.params.email
+            const query ={email}
+            const user = await usersCollections.findOne(query)
+            res.send({isAdminRole:user.role ==='admin'}) 
+        })
       //Goal modal data post-------robin
 
 
@@ -86,6 +112,15 @@ async function run() {
       });
 
       ////Goal modal data get-------robin
+
+
+      app.get('/myGoals/:id', async (req, res) => {
+         const id = req.params.id;
+         const query = { _id: ObjectId(id) };
+         const goal = await goalsCollections.findOne(query);
+         res.send(goal)
+      })
+      
       app.get('/goals', async (req, res) => {
          // const email = req.query.email
          const query = {}
