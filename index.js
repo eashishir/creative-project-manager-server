@@ -24,6 +24,7 @@ async function run() {
       const taskCollections = client.db('creative-manager').collection('tasks');
       const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
+      const projectPlanning = client.db('creative-manager').collection('project-planning')
       const goalsCollections = client.db('creative-manager').collection('goals')
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
       const blogCollections = client.db('creative-manager').collection('blog-article')
