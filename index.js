@@ -57,7 +57,7 @@ async function run() {
          const cursor =  await usersCollections.find(query).toArray()
         res.send(cursor)
       })
-      // project-planning ----------Mofassel
+      // project-planning ----------Mofassel Hosain
       app.get ("/project-planning",async(req,res)=>{
          const query = {}
          const cursor =  await projectPlanning.find(query).toArray()
@@ -70,7 +70,7 @@ async function run() {
          const query = {_id:ObjectId(id)}
          // const result = await usersCollections.deleteOne(query)
          // res.send(result)
-         console.log(id,query);
+         // console.log(id,query);
      })
       // Admin roll ----Mofasse
           app.get('/adminRole/:email',async(req,res)=>{
