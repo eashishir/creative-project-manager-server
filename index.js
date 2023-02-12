@@ -64,14 +64,28 @@ async function run() {
         res.send(cursor)
       })
       // user delete  ----Mofassel
-      app.delete("/allusers/:id",async(req,res)=>{
-
+      app.delete("/allusers/:id" ,async(req,res)=>{
          const id = req.params.id;
-         const query = {_id:ObjectId(id)}
-         // const result = await usersCollections.deleteOne(query)
-         // res.send(result)
-         // console.log(id,query);
+         const filter = {_id:ObjectId(id)}
+         const result = await usersCollections.deleteOne(filter)
+         res.send(result)
      })
+   //   --------------------------
+   // Create Admin ------Mofassel
+   app.put("/user/admin/:id",async(req,res)=>{
+     const id = req.params.id
+     const filter = {_id:ObjectId(id)}  
+    const options = { upsert: true }
+    const updateDoc = {
+      $set: {
+        role:"admin" 
+      },
+   }
+   const result = await usersCollections.updateOne(filter,updateDoc,options)
+   res.send(result)
+   console.log(result)
+})
+   // ---------------------------------
       // Admin roll ----Mofasse
           app.get('/adminRole/:email',async(req,res)=>{
             const email = req.params.email
@@ -79,6 +93,7 @@ async function run() {
             const user = await usersCollections.findOne(query)
             res.send({isAdminRole:user.role ==='admin'}) 
         })
+      //   --------------------------------
       //Goal modal data post-------robin
       app.post('/goals', async (req, res) => {
          goals = req.body
@@ -98,7 +113,6 @@ async function run() {
          console.log(UpImage);
          const result = await UploadImage.insertOne(UpImage)
          res.send(result)
-         console.log(result);
       })
       
    }
