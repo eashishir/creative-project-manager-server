@@ -21,7 +21,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
    try {
       console.log('db connected');
-      const taskCollections = client.db('creative-manager').collection('tasks');
+      const CreateProjectCollections = client.db('creative-manager').collection('create-project');
       const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
@@ -29,15 +29,22 @@ async function run() {
       const blogCollections = client.db('creative-manager').collection('blog-article')
       
 
+      //post create project
       
-      
-      app.post('/task', async (req, res) => {
-         const task = req.body;
-         const result = await taskCollections.insertOne(task);
+      app.post('/create-project', async (req, res) => {
+         const createProject = req.body;
+         const result = await CreateProjectCollections.insertOne(createProject);
          res.send(result);
-
       });
 
+      //get create project
+      app.get('/create-project', async (req, res) => {
+         const query = {}
+         const projects = await CreateProjectCollections.find(query).toArray();
+         res.send(projects);
+      })
+
+     
       //todo
       app.post('/todoTask', async (req, res) => {
          const todo = req.body;
@@ -46,14 +53,7 @@ async function run() {
          res.send(result);
       });
 
-      app.get('/task', async (req, res) => {
-         const query = {};
-         const cursor = taskCollections.find(query)
-         const tasks = await cursor.toArray();
-         console.log(tasks);
-         res.send(tasks)
-      });
-
+     
       //User information -----------
       app.post('/users', async (req, res) => {
          const user = req.body;
