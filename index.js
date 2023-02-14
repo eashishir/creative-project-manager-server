@@ -23,7 +23,14 @@ async function run() {
       console.log('db connected');
       const taskCollections = client.db('creative-manager').collection('tasks')
       const usersCollections = client.db('creative-manager').collection('users')
+      // resurces -----------mofassel
       const projectPlanning = client.db('creative-manager').collection('project-planning')
+      const inspireImpact = client.db('creative-manager').collection('inspire-impact')
+      const projectManagementResources = client.db('creative-manager').collection('project-management')
+      const allResources = client.db('creative-manager').collection('all-resources')
+      const collabiratinResources = client.db('creative-manager').collection('collabiration')
+      const businessStrategy = client.db('creative-manager').collection('business-strategy')
+      // --------------------------------
       const goalsCollections = client.db('creative-manager').collection('goals')
       // Mofassel-----------
       const UploadImage = client.db('UploadImage').collection('images')
@@ -63,6 +70,91 @@ async function run() {
          const cursor =  await projectPlanning.find(query).toArray()
         res.send(cursor)
       })
+
+      
+      app.get ("/project-planning/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await projectPlanning.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+      // inspire-impact
+     
+      app.get ("/inspire-impact",async(req,res)=>{
+         const query = {}
+         const cursor =  await inspireImpact.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/inspire-impact/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await inspireImpact.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+   //   project-management =======Mofassel
+      app.get ("/project-management",async(req,res)=>{
+         const query = {}
+         const cursor =  await projectManagementResources.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/project-management/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await projectManagementResources.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+   //   alll-resources ------Mofassel
+      app.get ("/all-resources",async(req,res)=>{
+         const query = {}
+         const cursor =  await allResources.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/all-resources/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await allResources.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+   //   collabiration ------  Mofassel
+      app.get ("/collabiration",async(req,res)=>{
+         const query = {}
+         const cursor =  await collabiratinResources.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/collabiration/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await collabiratinResources.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+   //   business-strategy --------- Mofassel
+      app.get ("/business-strategy",async(req,res)=>{
+         const query = {}
+         const cursor =  await businessStrategy.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/business-strategy/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await businessStrategy.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+     
+
+// -------------------------------------------------------
+
       // user delete  ----Mofassel
       app.delete("/allusers/:id" ,async(req,res)=>{
          const id = req.params.id;
