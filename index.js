@@ -28,6 +28,19 @@ async function run() {
       const goalsCollections = client.db('creative-manager').collection('goals')
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
       const blogCollections = client.db('creative-manager').collection('blog-article')
+      const membersCollections = client.db('creative-manager').collection('members')
+      
+
+//get members
+
+
+app.get('/members', async (req, res) => {
+   const query = {}
+   const members = await membersCollections.find(query).toArray();
+   res.send( members);
+})
+
+
 
       //post create project
       
@@ -145,7 +158,6 @@ async function run() {
       })
       
       app.get('/goals', async (req, res) => {
-         // const email = req.query.email
          const query = {}
          const goals = await goalsCollections.find(query).toArray();
          res.send(goals);
@@ -198,6 +210,13 @@ async function run() {
       });
 
 
+//get blog article by id
+app.get('/blog-article/:id', async (req, res) => {
+   const id = req.params.id;
+   const query = { _id: ObjectId(id) };
+   const article = await blogCollections.findOne(query);
+   res.send(article)
+})
 
    }
    finally {
