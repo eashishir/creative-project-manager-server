@@ -28,8 +28,9 @@ async function run() {
       const inspireImpact = client.db('creative-manager').collection('inspire-impact')
       const projectManagementResources = client.db('creative-manager').collection('project-management')
       const allResources = client.db('creative-manager').collection('all-resources')
-      const collabiratinResources = client.db('creative-manager').collection('collabiration')
+      const collabiratinResources = client.db('creative-manager').collection('collaboration')
       const businessStrategy = client.db('creative-manager').collection('business-strategy')
+      const GoalsBlogsResources = client.db('creative-manager').collection('goals-blog')
       // --------------------------------
       const goalsCollections = client.db('creative-manager').collection('goals')
       // Mofassel-----------
@@ -124,12 +125,12 @@ async function run() {
         console.log(result);
       })
    //   collabiration ------  Mofassel
-      app.get ("/collabiration",async(req,res)=>{
+      app.get ("/collaboration",async(req,res)=>{
          const query = {}
          const cursor =  await collabiratinResources.find(query).toArray()
         res.send(cursor)
       })
-      app.get ("/collabiration/:id",async(req,res)=>{
+      app.get ("/collaboration/:id",async(req,res)=>{
          const id = req.params.id;
 
          const query = {_id :ObjectId(id)}
@@ -138,16 +139,33 @@ async function run() {
         console.log(result);
       })
    //   business-strategy --------- Mofassel
-      app.get ("/business-strategy",async(req,res)=>{
+      app.get ("/business",async(req,res)=>{
          const query = {}
          const cursor =  await businessStrategy.find(query).toArray()
         res.send(cursor)
       })
-      app.get ("/business-strategy/:id",async(req,res)=>{
+      app.get ("/business/:id",async(req,res)=>{
          const id = req.params.id;
 
          const query = {_id :ObjectId(id)}
          const result = await businessStrategy.findOne(query)
+        res.send(result)
+        console.log(result);
+      })
+     
+
+// -------------------------------------------------------
+   //   Goals-blogs --------- Mofassel
+      app.get ("/goals-blog",async(req,res)=>{
+         const query = {}
+         const cursor =  await GoalsBlogsResources.find(query).toArray()
+        res.send(cursor)
+      })
+      app.get ("/goals-blog/:id",async(req,res)=>{
+         const id = req.params.id;
+
+         const query = {_id :ObjectId(id)}
+         const result = await goals-blog.findOne(query)
         res.send(result)
         console.log(result);
       })
