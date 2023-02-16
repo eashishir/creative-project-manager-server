@@ -25,19 +25,15 @@ async function run() {
       const projectCollections = client.db('creative-manager').collection('Projects')
       const usersCollections = client.db('creative-manager').collection('users')
       const goalsCollections = client.db('creative-manager').collection('goals')
-      const editedProjectCollections = client.db('creative-manager').collection('edited-project')
-      const blogCollections = client.db('creative-manager').collection('blog-article')
+      // const editedProjectCollections = client.db('creative-manager').collection('edited-project')
+      // const blogCollections = client.db('creative-manager').collection('blog-article')
       const membersCollections = client.db('creative-manager').collection('members')
+      // const productivitiesCollections = client.db('creative-manager').collection('productivity')
+   
+
+
       
 
-//get members
-
-
-app.get('/members', async (req, res) => {
-   const query = {}
-   const members = await membersCollections.find(query).toArray();
-   res.send( members);
-})
 
 
 
@@ -103,56 +99,72 @@ app.get('/members', async (req, res) => {
 
 
       //get project by user
-      app.get('/project', async (req, res) => {
-         let query = {};
-         if (req.query.email) {
-            query = {
-               email: req.query.email
-            }
-         }
-         const cursor = projectCollections.find(query);
-         const project = await cursor.toArray();
-         res.send(project);
-      });
+      // app.get('/project', async (req, res) => {
+      //    let query = {};
+      //    if (req.query.email) {
+      //       query = {
+      //          email: req.query.email
+      //       }
+      //    }
+      //    const cursor = projectCollections.find(query);
+      //    const project = await cursor.toArray();
+      //    res.send(project);
+      // });
 
    //edited project
 
-app.post('/project-edited',async (req,res)=>{
-   const project= req.body;
-   const result = await editedProjectCollections.insertOne(project);
-   res.send(result);
-});
+// app.post('/project-edited',async (req,res)=>{
+//    const project= req.body;
+//    const result = await editedProjectCollections.insertOne(project);
+//    res.send(result);
+// });
 
 //get edited projects by user
-app.get('/project-edited',async(req,res)=>{
-   // console.log(req.query);
-   let query = {};
-   if(req.query.email){
-      query={
-         email:req.query.email
-      }
-   }
-   const cursor = editedProjectCollections.find(query);
-   const editedProject = await cursor.toArray();
-   res.send(editedProject);
-});
+// app.get('/project-edited',async(req,res)=>{
+//    // console.log(req.query);
+//    let query = {};
+//    if(req.query.email){
+//       query={
+//          email:req.query.email
+//       }
+//    }
+//    const cursor = editedProjectCollections.find(query);
+//    const editedProject = await cursor.toArray();
+//    res.send(editedProject);
+// });
   
 
 //get blog article
-app.get('/blog-article', async (req, res) => {
+// app.get('/blog-article', async (req, res) => {
+//    const query = {}
+//    const article = await blogCollections.find(query).toArray();
+//    res.send(article);
+// });
+
+
+//get members
+
+app.get('/members', async (req, res) => {
    const query = {}
-   const article = await blogCollections.find(query).toArray();
-   res.send(article);
+   const members = await membersCollections.find(query).toArray();
+   res.send( members);
 });
 
+//post productivity
 
-//get blog article by id
-app.get('/blog-article/:id', async (req, res) => {
-   const id = req.params.id;
-   const query = { _id: ObjectId(id) };
-   const article = await blogCollections.findOne(query);
-   res.send(article)
-})
+// app.post('/productivity',async (req,res)=>{
+//    const productivity = req.body;
+//    const result = await productivitiesCollections.insertOne(productivity);
+//    res.send(result);
+// });
+
+//get productivity
+// app.get('/productivity', async (req, res) => {
+//    const query = {}
+//    const  productivities  = await productivitiesCollections.find(query).toArray();
+//    res.send( productivities);
+// });
+
 
    }
    finally {
