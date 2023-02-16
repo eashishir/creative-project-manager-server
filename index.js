@@ -37,21 +37,22 @@ async function run() {
       const editedProjectCollections = client.db('creative-manager').collection('edited-project')
       const blogCollections = client.db('creative-manager').collection('blog-article')
       const membersCollections = client.db('creative-manager').collection('members')
-      
-
-//get members
+      const productivitiesCollections = client.db('creative-manager').collection('productivity')
 
 
-app.get('/members', async (req, res) => {
-   const query = {}
-   const members = await membersCollections.find(query).toArray();
-   res.send( members);
-})
+      //get members
+
+
+      app.get('/members', async (req, res) => {
+         const query = {}
+         const members = await membersCollections.find(query).toArray();
+         res.send(members);
+      })
 
 
 
       //post create project
-      
+
       app.post('/create-project', async (req, res) => {
          const createProject = req.body;
          const result = await CreateProjectCollections.insertOne(createProject);
@@ -65,7 +66,7 @@ app.get('/members', async (req, res) => {
          res.send(projects);
       })
 
-     
+
       //todo
       app.post('/todoTask', async (req, res) => {
          const todo = req.body;
@@ -74,7 +75,7 @@ app.get('/members', async (req, res) => {
          res.send(result);
       });
 
-     
+
       //User information -----------
       app.post('/users', async (req, res) => {
          const user = req.body;
@@ -83,149 +84,149 @@ app.get('/members', async (req, res) => {
 
       })
       // all user get ----------Mofassel
-      app.get ("/allusers",async(req,res)=>{
+      app.get("/allusers", async (req, res) => {
          const query = {}
-         const cursor =  await usersCollections.find(query).toArray()
-        res.send(cursor)
+         const cursor = await usersCollections.find(query).toArray()
+         res.send(cursor)
       })
       // project-planning ----------Mofassel Hosain
-      app.get ("/project-planning",async(req,res)=>{
+      app.get("/project-planning", async (req, res) => {
          const query = {}
-         const cursor =  await projectPlanning.find(query).toArray()
-        res.send(cursor)
+         const cursor = await projectPlanning.find(query).toArray()
+         res.send(cursor)
       })
 
-      
-      app.get ("/project-planning/:id",async(req,res)=>{
+
+      app.get("/project-planning/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await projectPlanning.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
       // inspire-impact
-     
-      app.get ("/inspire-impact",async(req,res)=>{
+
+      app.get("/inspire-impact", async (req, res) => {
          const query = {}
-         const cursor =  await inspireImpact.find(query).toArray()
-        res.send(cursor)
+         const cursor = await inspireImpact.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/inspire-impact/:id",async(req,res)=>{
+      app.get("/inspire-impact/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await inspireImpact.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
-   //   project-management =======Mofassel
-      app.get ("/project-management",async(req,res)=>{
+      //   project-management =======Mofassel
+      app.get("/project-management", async (req, res) => {
          const query = {}
-         const cursor =  await projectManagementResources.find(query).toArray()
-        res.send(cursor)
+         const cursor = await projectManagementResources.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/project-management/:id",async(req,res)=>{
+      app.get("/project-management/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await projectManagementResources.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
-   //   alll-resources ------Mofassel
-      app.get ("/all-resources",async(req,res)=>{
+      //   alll-resources ------Mofassel
+      app.get("/all-resources", async (req, res) => {
          const query = {}
-         const cursor =  await allResources.find(query).toArray()
-        res.send(cursor)
+         const cursor = await allResources.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/all-resources/:id",async(req,res)=>{
+      app.get("/all-resources/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await allResources.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
-   //   collabiration ------  Mofassel
-      app.get ("/collaboration",async(req,res)=>{
+      //   collabiration ------  Mofassel
+      app.get("/collaboration", async (req, res) => {
          const query = {}
-         const cursor =  await collabiratinResources.find(query).toArray()
-        res.send(cursor)
+         const cursor = await collabiratinResources.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/collaboration/:id",async(req,res)=>{
+      app.get("/collaboration/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await collabiratinResources.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
-   //   business-strategy --------- Mofassel
-      app.get ("/business",async(req,res)=>{
+      //   business-strategy --------- Mofassel
+      app.get("/business", async (req, res) => {
          const query = {}
-         const cursor =  await businessStrategy.find(query).toArray()
-        res.send(cursor)
+         const cursor = await businessStrategy.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/business/:id",async(req,res)=>{
+      app.get("/business/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
+         const query = { _id: ObjectId(id) }
          const result = await businessStrategy.findOne(query)
-        res.send(result)
-        console.log(result);
+         res.send(result)
+         console.log(result);
       })
-     
 
-// -------------------------------------------------------
-   //   Goals-blogs --------- Mofassel
-      app.get ("/goals-blog",async(req,res)=>{
+
+      // -------------------------------------------------------
+      //   Goals-blogs --------- Mofassel
+      app.get("/goals-blog", async (req, res) => {
          const query = {}
-         const cursor =  await GoalsBlogsResources.find(query).toArray()
-        res.send(cursor)
+         const cursor = await GoalsBlogsResources.find(query).toArray()
+         res.send(cursor)
       })
-      app.get ("/goals-blog/:id",async(req,res)=>{
+      app.get("/goals-blog/:id", async (req, res) => {
          const id = req.params.id;
 
-         const query = {_id :ObjectId(id)}
-         const result = await goals-blog.findOne(query)
-        res.send(result)
-        console.log(result);
+         const query = { _id: ObjectId(id) }
+         const result = await goals - blog.findOne(query)
+         res.send(result)
+         console.log(result);
       })
-     
 
-// -------------------------------------------------------
+
+      // -------------------------------------------------------
 
       // user delete  ----Mofassel
-      app.delete("/allusers/:id" ,async(req,res)=>{
+      app.delete("/allusers/:id", async (req, res) => {
          const id = req.params.id;
-         const filter = {_id:ObjectId(id)}
+         const filter = { _id: ObjectId(id) }
          const result = await usersCollections.deleteOne(filter)
          res.send(result)
-     })
-   //   --------------------------
-   // Create Admin ------Mofassel
-   app.put("/user/admin/:id",async(req,res)=>{
-     const id = req.params.id
-     const filter = {_id:ObjectId(id)}  
-    const options = { upsert: true }
-    const updateDoc = {
-      $set: {
-        role:"admin" 
-      },
-   }
-   const result = await usersCollections.updateOne(filter,updateDoc,options)
-   res.send(result)
-   console.log(result)
-})
-   // ---------------------------------
+      })
+      //   --------------------------
+      // Create Admin ------Mofassel
+      app.put("/user/admin/:id", async (req, res) => {
+         const id = req.params.id
+         const filter = { _id: ObjectId(id) }
+         const options = { upsert: true }
+         const updateDoc = {
+            $set: {
+               role: "admin"
+            },
+         }
+         const result = await usersCollections.updateOne(filter, updateDoc, options)
+         res.send(result)
+         console.log(result)
+      })
+      // ---------------------------------
       // Admin roll ----Mofasse
-          app.get('/adminRole/:email',async(req,res)=>{
-            const email = req.params.email
-            const query ={email}
-            const user = await usersCollections.findOne(query)
-            res.send({isAdminRole:user.role ==='admin'}) 
-        })
+      app.get('/adminRole/:email', async (req, res) => {
+         const email = req.params.email
+         const query = { email }
+         const user = await usersCollections.findOne(query)
+         res.send({ isAdminRole: user.role === 'admin' })
+      })
       //   --------------------------------
       //Goal modal data post-------robin
 
@@ -272,6 +273,66 @@ app.get('/members', async (req, res) => {
          res.send(result);
       });
 
+
+      // get project by user
+      app.get('/project', async (req, res) => {
+         let query = {};
+         if (req.query.email) {
+            query = {
+               email: req.query.email
+            }
+         }
+         const cursor = projectCollections.find(query);
+         const project = await cursor.toArray();
+         res.send(project);
+      });
+
+      // edited project
+
+      app.post('/project-edited', async (req, res) => {
+         const project = req.body;
+         const result = await editedProjectCollections.insertOne(project);
+         res.send(result);
+      });
+
+      // get edited projects by user
+      app.get('/project-edited', async (req, res) => {
+         // console.log(req.query);
+         let query = {};
+         if (req.query.email) {
+            query = {
+               email: req.query.email
+            }
+         }
+         const cursor = editedProjectCollections.find(query);
+         const editedProject = await cursor.toArray();
+         res.send(editedProject);
+      });
+
+
+      // get blog article
+      app.get('/blog-article', async (req, res) => {
+         const query = {}
+         const article = await blogCollections.find(query).toArray();
+         res.send(article);
+      });
+
+
+      // post productivity
+
+      app.post('/productivity', async (req, res) => {
+         const productivity = req.body;
+         const result = await productivitiesCollections.insertOne(productivity);
+         res.send(result);
+      });
+
+      // get productivity
+      app.get('/productivity', async (req, res) => {
+         const query = {}
+         const productivities = await productivitiesCollections.find(query).toArray();
+         res.send(productivities);
+      });
+
       ////Goal modal data get-------robin
 
 
@@ -281,7 +342,7 @@ app.get('/members', async (req, res) => {
          const goal = await goalsCollections.findOne(query);
          res.send(goal)
       })
-      
+
       app.get('/goals', async (req, res) => {
          const query = {}
          const goals = await goalsCollections.find(query).toArray();
@@ -294,7 +355,7 @@ app.get('/members', async (req, res) => {
          const result = await UploadImage.insertOne(UpImage)
          res.send(result)
       })
-      
+
    }
    finally {
 
@@ -304,7 +365,7 @@ app.get('/members', async (req, res) => {
 run().catch(console.log)
 
 
-run().catch(console.log)
+
 
 app.get('/', async (req, res) => {
    res.send('Creative product manager is running');
