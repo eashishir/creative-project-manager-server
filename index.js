@@ -189,7 +189,7 @@ async function run() {
          const id = req.params.id;
 
          const query = { _id: ObjectId(id) }
-         const result = await goals - blog.findOne(query)
+         const result = await  GoalsBlogsResources.findOne(query)
          res.send(result)
          console.log(result);
       })
