@@ -237,7 +237,7 @@ async function run() {
          res.send(user)
       })
 
-      app.put('users/:id', async (req, res) => {
+      app.put('/users/:id', async (req, res) => {
          const id = req.params.id;
          const unique = { _id: ObjectId(id) };
          const oldUser = req.body;
@@ -354,6 +354,22 @@ async function run() {
          console.log(UpImage);
          const result = await UploadImage.insertOne(UpImage)
          res.send(result)
+      })
+
+      // jahid members collection
+       // create team member
+       app.post('/create_member', async (req, res) => {
+         const teamData = req.body;
+         console.log(teamData)
+         const result = await teamMembersCollections.insertOne(teamData)
+         res.send(result)
+      })
+
+      //get team members in team member list
+      app.get('/create_member', async (req, res) => {
+         const query = {};
+         const filter = await teamMembersCollections.find(query).toArray()
+         res.send(filter)
       })
 
    }
