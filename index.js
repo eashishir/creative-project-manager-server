@@ -38,6 +38,7 @@ async function run() {
       const blogCollections = client.db('creative-manager').collection('blog-article')
       const membersCollections = client.db('creative-manager').collection('members')
       const productivitiesCollections = client.db('creative-manager').collection('productivity')
+      const teamMembersCollections = client.db('creative-manager').collection('create_member')
 
 
       //get members
@@ -47,6 +48,22 @@ async function run() {
          const query = {}
          const members = await membersCollections.find(query).toArray();
          res.send(members);
+      })
+
+
+      // create team member
+      app.post('/create_member', async (req, res) => {
+         const teamData = req.body;
+         console.log(teamData)
+         const result = await teamMembersCollections.insertOne(teamData)
+         res.send(result)
+      })
+
+      //get team members in team member list
+      app.get('/create_member', async (req, res) => {
+         const query = {};
+         const filter = await teamMembersCollections.find(query).toArray()
+         res.send(filter)
       })
 
 
@@ -70,7 +87,7 @@ async function run() {
       //todo
       app.post('/todoTask', async (req, res) => {
          const todo = req.body;
-         console.log(todo);
+         // console.log(todo);
          const result = await todoCollection.insertOne(todo);
          res.send(result);
       });
@@ -189,7 +206,7 @@ async function run() {
          const id = req.params.id;
 
          const query = { _id: ObjectId(id) }
-         const result = await  GoalsBlogsResources.findOne(query)
+         const result = await GoalsBlogsResources.findOne(query)
          res.send(result)
          console.log(result);
       })
