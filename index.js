@@ -190,7 +190,7 @@ async function run() {
          const id = req.params.id;
 
          const query = { _id: ObjectId(id) }
-         const result = await  GoalsBlogsResources.findOne(query)
+         const result = await GoalsBlogsResources.findOne(query)
          res.send(result)
          console.log(result);
       })
@@ -334,6 +334,24 @@ async function run() {
          res.send(productivities);
       });
 
+      // get blog article by id
+
+
+      app.get("/blog-article/:id", async (req, res) => {
+
+
+         const id = req.params.id;
+
+
+         const query = { _id: ObjectId(id) }
+            ;
+
+         const result = await blogCollections.findOne(query);
+
+         res.send(result);
+
+      })
+
       ////Goal modal data get-------robin
 
 
@@ -358,8 +376,8 @@ async function run() {
       })
 
       // jahid members collection
-       // create team member
-       app.post('/create_member', async (req, res) => {
+      // create team member
+      app.post('/create_member', async (req, res) => {
          const teamData = req.body;
          console.log(teamData)
          const result = await teamMembersCollections.insertOne(teamData)
